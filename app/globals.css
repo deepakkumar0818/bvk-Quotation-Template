@@ -1,0 +1,172 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 210mm;
+  margin: 0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: #000;
+  background: #fff;
+}
+
+/* Screen-only: hide when printing */
+.no-print {
+  display: block;
+}
+
+/* Print header: hidden on screen, repeated on every printed page (when using fixed approach) */
+.print-header {
+  display: none;
+}
+
+/* Wrapper table for repeating header: thead hidden on screen */
+.print-doc-table thead {
+  display: none;
+}
+
+/* Standard Conditions: hidden on screen, shown when printing (after quotation) */
+.conditions-for-print {
+  display: none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+@media print {
+  /* A4 sheet: 21cm x 29.7cm - reserve fixed space from edges so content is not cut off */
+  @page {
+    size: A4;
+    margin-top: 1.5cm;
+    margin-bottom: 2cm;
+    margin-left: 1.5cm;
+    margin-right: 1.5cm;
+  }
+  body {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .no-print {
+    display: none !important;
+  }
+  /* Reduce page padding so content starts closer to header */
+  .quotation-doc {
+    padding: 8px 16px !important;
+  }
+  /* Repeating header: table thead repeats on each page; no extra spacing */
+  .print-doc-table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  .print-doc-table thead {
+    display: table-header-group;
+  }
+  .print-doc-table thead tr {
+    margin: 0;
+  }
+  .print-doc-table tbody tr td {
+    padding-top: 0 !important;
+  }
+  .print-header {
+    display: none !important;
+  }
+  .screen-only-header {
+    display: none !important;
+  }
+  /* Remove gap after repeated header: no top margin on first content in tbody */
+  .print-doc-table tbody td > *:first-child {
+    margin-top: 0 !important;
+  }
+  .conditions-for-print {
+    display: block !important;
+    padding-top: 12px;
+  }
+  /* Total INR: show tfoot only once at end of table, not repeated at bottom of each page */
+  .quotation-doc table tfoot {
+    display: table-row-group;
+  }
+  /* Keep Remarks + DOC NO. with content above when possible to avoid a short page */
+  .quotation-doc table:last-of-type {
+    page-break-after: avoid;
+  }
+  .quotation-doc .conditions-for-print h1 {
+    page-break-after: avoid;
+  }
+}
+
+/* Print button */
+.print-button {
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #1e40af;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.print-button:hover {
+  background: #1e3a8a;
+}
+
+/* Quotation document tables */
+.quotation-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+}
+
+.quotation-doc th,
+.quotation-doc td {
+  border: 1px solid #000;
+  padding: 6px 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.quotation-doc .text-right {
+  text-align: right;
+}
+
+.quotation-doc .font-bold {
+  font-weight: bold;
+}
+
+.quotation-doc .section-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #f5f5f5;
+  padding: 6px 8px;
+}
+
+.quotation-doc .amount-in-words {
+  font-style: italic;
+  padding: 8px 0;
+}
+
+.conditions-doc h1 {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.conditions-doc .section {
+  margin-bottom: 16px;
+}
+
+.conditions-doc .section-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.conditions-doc p {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
